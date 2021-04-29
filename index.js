@@ -34,7 +34,8 @@ var questions = [
   }
 ];
 
-var counter = 1`
+var counter = 1
+var score = 0
 
 function init(){
   var question = document.createElement('h1')
@@ -42,11 +43,12 @@ function init(){
   question.setAttribute('id', 'title')
   document.body.appendChild(question)
 
-  questions[0].choices.forEach(el => {
+  questions[0].choices.forEach((el, i) => {
     var button = document.createElement('button')
+    var choice = questions[0].choices[i];
     button.innerHTML = el
     button.setAttribute('class', 'answer')
-    button.addEventListener('click', nextQuestion)
+    // button.addEventListener('click', checkAnswer)
     document.body.appendChild(button)
   })
 }
@@ -60,4 +62,10 @@ function nextQuestion(){
   counter++
 }
 
+function checkAnswer(){
+  console.log(this)
+  nextQuestion()
+}
+
 document.getElementById('start').addEventListener('click',init)
+
