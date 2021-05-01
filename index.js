@@ -45,10 +45,9 @@ function init(){
 
   questions[0].choices.forEach((el, i) => {
     var button = document.createElement('button')
-    var choice = questions[0].choices[i];
     button.innerHTML = el
     button.setAttribute('class', 'answer')
-    // button.addEventListener('click', checkAnswer)
+    button.addEventListener('click', checkAnswer)
     document.body.appendChild(button)
   })
 }
@@ -62,10 +61,25 @@ function nextQuestion(){
   counter++
 }
 
-function checkAnswer(){
+function checkAnswer(event){
   console.log(this)
-  nextQuestion()
+
+  setTimeout(() => {
+      nextQuestion()
+  }, 50);
 }
 
 document.getElementById('start').addEventListener('click',init)
 
+// document.addEventListener('click', function (event) {
+//   if (event.target.matches('.answer')) {
+//     var currentQuestion = questions[counter - 1];
+//     console.log('event.target.dataset.choice', event.target.dataset.choice, currentQuestion.answer)
+//     if (currentQuestion.answer === event.target.dataset.choice) {
+//       console.log('Correct answer')
+//     nextQuestion()
+//     } else {
+//       console.log('Wrong answer')
+//     }
+//   }
+// })
