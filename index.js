@@ -34,12 +34,13 @@ var questions = [
   }
 ];
 
-var counter = 1
+var counter = 0
 var score = 0
 
 function init(){
+  document.getElementById('start').remove()
   var question = document.createElement('h1')
-  question.innerHTML = questions[0].title
+  question.innerHTML = questions[counter].title
   question.setAttribute('id', 'title')
   document.body.appendChild(question)
 
@@ -53,33 +54,42 @@ function init(){
 }
 
 function nextQuestion(){
+  counter++
   document.getElementById('title').innerHTML = questions[counter].title
   var buttons = document.getElementsByClassName("answer")
   Array.from(buttons).forEach((el, i) => {
     el.innerHTML = questions[counter].choices[i]
   })
-  counter++
 }
 
 function checkAnswer(event){
-  console.log(this)
+  if(this.innerHTML === questions[counter].answer){
+    score++
+  }
+  if(counter === questions.length - 1){
+    end()
+  }
 
   setTimeout(() => {
       nextQuestion()
   }, 50);
 }
 
-document.getElementById('start').addEventListener('click',init)
+function end(){
+  document.getElementById('title').remove()
+  Array.from(document.getElementsByClassName('answer')).forEach(el => el.remove())
 
-// document.addEventListener('click', function (event) {
-//   if (event.target.matches('.answer')) {
-//     var currentQuestion = questions[counter - 1];
-//     console.log('event.target.dataset.choice', event.target.dataset.choice, currentQuestion.answer)
-//     if (currentQuestion.answer === event.target.dataset.choice) {
-//       console.log('Correct answer')
-//     nextQuestion()
-//     } else {
-//       console.log('Wrong answer')
-//     }
-//   }
-// })
+  var title = document.createElement('h1')
+  var subtitle  = document.createElement('h2')
+  var playerScore = document.createElement('p')
+
+  title.innerHTML = 'Game Over'
+  subtitle.innerHTML = 'Your score'
+  playerScore.innerHTML = score
+
+  document.body.appendChild(title)
+  document.body.appendChild(subtitle)
+  document.body.appendChild(playerScore)
+}
+
+document.getElementById('start').addEventListener('click',init)
